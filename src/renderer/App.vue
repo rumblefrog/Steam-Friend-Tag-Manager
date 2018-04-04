@@ -6,8 +6,8 @@
 
 <script>
   export default {
-    name: 'steam-friend-tag-manager'
-  }
+    name: 'steam-friend-tag-manager',
+  };
 </script>
 
 <style>
