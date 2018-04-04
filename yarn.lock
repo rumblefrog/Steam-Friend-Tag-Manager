@@ -10,6 +10,34 @@
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/7zip/-/7zip-0.0.6.tgz#9cafb171af82329490353b4816f03347aa150a30"
 
+"@fortawesome/fontawesome-common-types@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.1.3.tgz#8475e0f2d1ad1f858c4ec2e76ed9a2456a09ad83"
+
+"@fortawesome/fontawesome-free-brands@^5.0.9":
+  version "5.0.9"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-brands/-/fontawesome-free-brands-5.0.9.tgz#6023e29636a6d97a67a36b7e3f4af20f3d1526b0"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.1.3"
+
+"@fortawesome/fontawesome-free-regular@^5.0.9":
+  version "5.0.9"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-regular/-/fontawesome-free-regular-5.0.9.tgz#d420f0b9f9f4a3a0585f192d235d7e08bd5029d5"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.1.3"
+
+"@fortawesome/fontawesome-free-solid@^5.0.9":
+  version "5.0.9"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-solid/-/fontawesome-free-solid-5.0.9.tgz#456155a1cd82a0342ffe6a869d5a54fdadd78548"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.1.3"
+
+"@fortawesome/fontawesome@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome/-/fontawesome-1.1.5.tgz#c7cfafdd3364245626293cc670357f9fb8487170"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.1.3"
+
 "@types/node@^8.0.24":
   version "8.10.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.2.tgz#f1fb9c73414832c5b00ee954c4bbf68394e2e526"
@@ -1473,6 +1501,12 @@ browserslist@^2.1.2:
     caniuse-lite "^1.0.30000792"
     electron-to-chromium "^1.3.30"
 
+buefy@^0.6.5:
+  version "0.6.5"
+  resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.6.5.tgz#84e76e9101085dbbc84e66e755aff75030078553"
+  dependencies:
+    bulma "^0.6.2"
+
 buffer-crc32@^0.2.1:
   version "0.2.13"
   resolved "https://registry.yarnpkg.com/buffer-crc32/-/buffer-crc32-0.2.13.tgz#0d333e3f00eac50aa1454abd30ef8c2a5d9a7242"
@@ -1562,6 +1596,10 @@ builtin-modules@^1.0.0, builtin-modules@^1.1.1:
 builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
+
+bulma@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.6.2.tgz#f4b1d11d5acc51a79644eb0a2b0b10649d3d71f5"
 
 bytes@3.0.0:
   version "3.0.0"
