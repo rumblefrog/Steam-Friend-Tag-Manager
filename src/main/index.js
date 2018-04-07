@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from 'electron' // eslint-disable-line
+import * as SteamUser from 'steam-user';
 
 /**
  * Set `__static` path to static files in production
@@ -42,6 +43,10 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+global.steam = new SteamUser({
+  promptSteamGuardCode: false
 });
 
 /**
