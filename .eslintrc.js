@@ -8,7 +8,10 @@ module.exports = {
     browser: true,
     node: true
   },
-  extends: 'airbnb-base',
+  extends: [
+    'airbnb-base',
+    'prettier'
+  ],
   globals: {
     __static: true
   },
