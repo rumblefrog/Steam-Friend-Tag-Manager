@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <section class="hero is-black is-fullheight">
+    <section class="hero is-light is-fullheight">
       <div class="hero-head">
         <header class="navbar">
           <div class="container">
