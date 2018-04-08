@@ -11,8 +11,13 @@ export default new Router({
       component: require('@/components/Login').default,
     },
     {
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: require('@/components/Dashboard').default,
+    },
+    {
       path: '*',
-      redirect: '/login',
+      redirect: '/dashboard',
     },
   ],
 });

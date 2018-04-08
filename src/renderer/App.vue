@@ -47,7 +47,3 @@ export default {
   },
 };
 </script>
-
-<style>
-/* CSS */
-</style>
