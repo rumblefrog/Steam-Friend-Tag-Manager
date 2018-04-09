@@ -82,3 +82,9 @@ export default {
   name: "Dashboard"
 };
 </script>
+
+<style>
+.media-content {
+  overflow: hidden;
+}
+</style>
