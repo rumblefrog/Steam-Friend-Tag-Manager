@@ -41,6 +41,12 @@
                     <b-checkbox></b-checkbox>
                   </div>
                 </div>
+                <b-taglist>
+                  <b-tag type="is-success">Dev</b-tag>
+                  <b-tag type="is-primary">Maintainer</b-tag>
+                  <b-tag type="is-info">IRL</b-tag>
+                  <b-tag type="is-warning">Some other tag</b-tag>
+                </b-taglist>
               </div>
             </div>
           </div>
