@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Buefy from 'buefy';
-import 'buefy/lib/buefy.css';
 
 import fontawesome from "@fortawesome/fontawesome";
 import solid from "@fortawesome/fontawesome-free-solid";
