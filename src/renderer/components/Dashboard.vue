@@ -73,10 +73,71 @@
         </div>
       </div>
       <div class="is-divider-vertical"></div>
-      <div class="tile is-parent is-4">
+      <div class="tile is-3 is-parent is-vertical">
         <div class="tile is-child">
           <h1 class="title">Tags</h1>
           <div class="is-divider"></div>
+          <b-collapse class="card">
+            <div slot="trigger" slot-scope="props" class="card-header">
+              <p class="card-header-title">
+                Devs
+              </p>
+              <a class="card-header-icon">
+                <b-icon :icon="props.open ? 'caret-down' : 'caret-up'">
+                </b-icon>
+              </a>
+            </div>
+            <div class="card-content">
+              <div class="content">
+                <div class="card">
+                  <div class="card-content">
+                    <div class="media">
+                      <div class="media-left is-marginless">
+                        <figure class="image is-48x48">
+                          <img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/83/83ff9172657410332e62b6b3cf534e24c1085f00_full.jpg">
+                        </figure>
+                      </div>
+                      <div class="media-content">
+                        <p class="title is-5">Ron!</p>
+                        <p class="subtitle is-6">Eating Corn Cookies</p>
+                      </div>
+                      <div class="media-right">
+                        <b-checkbox></b-checkbox>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left is-marginless">
+                    <figure class="image is-48x48">
+                      <img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/bb/bbd4e5592832eedc2b041c26d91f121702dbae0f_full.jpg">
+                    </figure>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-5">Fishy</p>
+                    <p class="subtitle is-6">Online</p>
+                  </div>
+                  <div class="media-right">
+                    <b-checkbox></b-checkbox>
+                  </div>
+                </div>
+                <b-taglist>
+                  <b-tag type="is-success">Dev</b-tag>
+                  <b-tag type="is-primary">Maintainer</b-tag>
+                  <b-tag type="is-info">IRL</b-tag>
+                  <b-tag type="is-warning">Some other tag</b-tag>
+                </b-taglist>
+              </div>
+            </div>
+              </div>
+            </div>
+            <footer class="card-footer">
+              <a class="card-footer-item">Rename</a>
+              <a class="card-footer-item">Delete</a>
+            </footer>
+          </b-collapse>
         </div>
       </div>
     </div>
@@ -92,5 +153,8 @@ export default {
 <style>
 .media-content {
   overflow: hidden;
+}
+.content figure {
+  margin-left: 0;
 }
 </style>
