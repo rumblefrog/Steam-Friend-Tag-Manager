@@ -44,6 +44,26 @@
               </div>
             </div>
           </div>
+          <div class="tile is-parent is-3">
+            <div class="tile is-child card">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <figure class="image is-48x48">
+                      <img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/83/83ff9172657410332e62b6b3cf534e24c1085f00_full.jpg">
+                    </figure>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-5">Ron!</p>
+                    <p class="subtitle is-6">Eating Corn Cookies</p>
+                  </div>
+                  <div class="media-right">
+                    <b-checkbox></b-checkbox>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="is-divider-vertical"></div>
