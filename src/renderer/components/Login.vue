@@ -1,7 +1,6 @@
 <template>
-  <section class="hero is-light is-fullheight">
+  <section class="hero is-fullheight">
     <div class="hero-body">
-      <div class="columns">
         <div class="column is-4 is-offset-4">
           <b-field>
             <b-input v-model="username" icon="user" placeholder="Username ..."></b-input>
@@ -34,7 +33,6 @@
             </footer>
           </div>
         </b-modal>
-      </div>
     </div>
   </section>
 </template>
@@ -42,7 +40,8 @@
 <script>
 import { remote } from "electron";
 
-const steam = remote.getGlobal("steam");
+const client = remote.getGlobal("client");
+const SteamUser = remote.getGlobal("SteamUser");
 
 export default {
   name: "Login",
@@ -58,7 +57,7 @@ export default {
   },
   methods: {
     login() {
-      steam.logOn({
+      client.logOn({
         accountName: this.username,
         password: this.password
       });
@@ -69,10 +68,28 @@ export default {
     }
   },
   mounted() {
-    steam.on("steamGuard", (domain, callback) => {
+    client.on("steamGuard", (domain, callback) => {
       this.domain = domain;
       this.callback = callback;
       this.guardPrompt = true;
+    });
+    client.on("loggedOn", () => {
+      client.setPersona(SteamUser.EPersonaState.Online);
+    });
+    client.on("friendsList", () => {
+      const p = [];
+
+      Object.keys(client.myFriends).forEach(key => {
+        if (client.myFriends[key] === SteamUser.EFriendRelationship.Friend) p.push(key);
+      });
+
+      client.getPersonas(p, personas => {
+        this.$store.dispatch("updateFriends", personas);
+        this.$router.push("dashboard");
+      });
+    });
+    client.on("friendsGroupList", tags => {
+      this.$store.dispatch("updateTags", tags);
     });
   }
 };

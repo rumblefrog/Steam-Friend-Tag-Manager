@@ -47,9 +47,11 @@ app.on('activate', () => {
   }
 });
 
-global.steam = new SteamUser({
+global.client = new SteamUser({
   promptSteamGuardCode: false
 });
+
+global.SteamUser = SteamUser;
 
 /**
  * Auto Updater
