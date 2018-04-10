@@ -86,6 +86,9 @@
                         <b-checkbox></b-checkbox>
                       </div>
                     </div>
+                    <b-taglist>
+                      <b-tag type="is-success" v-for="tag in s().tagsMap[member.getSteamID64()]" :key="tag">{{ tag }}</b-tag>
+                    </b-taglist>
                   </div>
                 </div>
               </div>
