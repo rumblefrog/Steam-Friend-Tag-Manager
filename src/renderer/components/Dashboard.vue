@@ -58,7 +58,7 @@
         <div class="tile is-child">
           <h1 class="title">Tags</h1>
           <div class="is-divider"></div>
-          <b-collapse class="card" v-for="(tag, key) in this.$store.state.Steam.tags" :key="key">
+          <b-collapse class="card" v-for="(tag, key) in this.$store.state.Steam.tags" :key="key" :open="false">
             <div slot="trigger" slot-scope="props" class="card-header">
               <p class="card-header-title">
                 {{ tag.name }}
@@ -169,6 +169,6 @@ export default {
 }
 .do-not-scroll {
   height: 100vh;
-  display: block;
+  display: block !important;
 }
 </style>
