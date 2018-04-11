@@ -1,5 +1,5 @@
 <template>
-  <section class="section">
+  <section class="section is-dark">
     <div class="tile is-ancestor">
       <div class="tile is-8 is-vertical do-not-scroll">
         <div class="tile is-parent">

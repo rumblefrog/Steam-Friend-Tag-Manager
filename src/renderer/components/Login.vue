@@ -76,7 +76,7 @@ export default {
     client.on("loggedOn", () => {
       client.setPersona(SteamUser.EPersonaState.Online);
     });
-    client.on("friendPersonasLoaded", () => {
+    client.once("user", () => {
       const p = [];
 
       Object.keys(client.myFriends).forEach(key => {
