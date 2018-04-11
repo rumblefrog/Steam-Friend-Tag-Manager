@@ -108,11 +108,15 @@
 import { remote } from "electron";
 import * as fuzzysearch from "fuzzysearch";
 import * as _ from "lodash";
+import draggable from 'vuedraggable';
 
 const SteamUser = remote.getGlobal("SteamUser");
 
 export default {
   name: "Dashboard",
+  components: {
+    draggable
+  },
   data() {
     return {
       online_only: false,
@@ -155,6 +159,11 @@ export default {
         return _.sortBy(filtered, "persona_state");
       }
       return _.sortBy(this.s().friends, "persona_state");
+    },
+    dragOptions() {
+      return {
+        draggable: '.column'
+      }
     }
   }
 };
