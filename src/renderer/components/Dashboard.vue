@@ -25,7 +25,7 @@
         </div>
         <div class="tile is-parent">
           <div class="tile is-child">
-            <draggable class="columns is-multiline" :options="{group: {name: 'manage', pull: 'clone', put: false}, draggable: '.column'}">
+            <draggable class="columns is-multiline" :options="{group: {name: 'manage', pull: 'clone', put: false}}" :clone="onClone">
               <div class="column is-3" v-for="friend in availableFriends" :key="friend._id" v-if="filterSearch(friend)">
                 <div class="card">
                   <div class="card-content">
@@ -149,8 +149,12 @@ export default {
       }
       return true;
     },
-    onAdd(evt) {
-      console.log(evt);
+    onClone(el) {
+      console.log(el);
+      return el;
+    },
+    onAdd() {
+      console.log('moved');
     }
   },
   computed: {
