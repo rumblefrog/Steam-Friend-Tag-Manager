@@ -25,8 +25,8 @@
         </div>
         <div class="tile is-parent">
           <div class="tile is-child">
-            <div class="columns is-multiline">
-              <div class="column is-3" v-for="(friend, key) in availableFriends" :key="key" v-if="filterSearch(friend)">
+            <draggable class="columns is-multiline" :options="{group: {name: 'manage', pull: 'clone', put: false}, draggable: '.column'}">
+              <div class="column is-3" v-for="friend in availableFriends" :key="friend._id" v-if="filterSearch(friend)">
                 <div class="card">
                   <div class="card-content">
                     <div class="media">
@@ -44,12 +44,13 @@
                       </div>
                     </div>
                     <b-taglist>
-                      <b-tag type="is-success" v-for="tag in s().tagsMap[key]" :key="tag">{{ tag }}</b-tag>
+                      <b-tag type="is-success" v-for="tag in s().tagsMap[friend._id]" :key="tag">{{ tag }}</b-tag>
                     </b-taglist>
                   </div>
                 </div>
               </div>
-            </div>
+            </draggable>
+            <b-loading :active.sync="loading"></b-loading>
           </div>
         </div>
       </div>
@@ -69,7 +70,7 @@
               </a>
             </div>
             <div class="card-content">
-              <div class="content">
+              <draggable class="content" @add="onAdd" :options="{group: {name: 'manage', pull: false, put: true}}">
                 <div class="card" v-for="(member, key) in sortMembers(key)" :key="key">
                   <div class="card-content">
                     <div class="media">
@@ -91,7 +92,7 @@
                     </b-taglist>
                   </div>
                 </div>
-              </div>
+              </draggable>
             </div>
             <footer class="card-footer">
               <a class="card-footer-item">Rename</a>
@@ -120,7 +121,8 @@ export default {
   data() {
     return {
       online_only: false,
-      search_filter: ""
+      search_filter: "",
+      loading: false
     };
   },
   methods: {
@@ -147,23 +149,18 @@ export default {
       }
       return true;
     },
+    onAdd(evt) {
+      console.log(evt);
+    }
   },
   computed: {
     availableFriends() {
-      if (this.online_only) {
-        const filtered = {};
-        Object.keys(this.s().friends).forEach((friend) => {
-          if (this.s().friends[friend].persona_state !== null)
-            filtered[friend] = this.s().friends[friend];
-        });
-        return _.sortBy(filtered, "persona_state");
-      }
-      return _.sortBy(this.s().friends, "persona_state");
-    },
-    dragOptions() {
-      return {
-        draggable: '.column'
-      }
+      const filtered = {};
+      Object.keys(this.s().friends).forEach((friend) => {
+        if (!this.online_only || this.s().friends[friend].persona_state !== null)
+          filtered[friend] = Object.assign(this.s().friends[friend], { _id: friend });
+      });
+      return _.sortBy(filtered, "persona_state");
     }
   }
 };
