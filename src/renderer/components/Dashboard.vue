@@ -14,7 +14,11 @@
           </div>
           <div class="tile is-child is-3">
             <b-field position="is-right">
-              <b-input placeholder="Search..." type="search" icon="search" v-model="search_filter"></b-input>
+              <b-input placeholder="Search..." 
+                type="search" 
+                icon="search" 
+                v-model="search_filter">
+              </b-input>
             </b-field>
           </div>
         </div>
@@ -25,9 +29,12 @@
         </div>
         <div class="tile is-parent">
           <div class="tile is-child">
-            <draggable class="columns is-multiline" :options="{group: {name: 'manage', pull: 'clone', put: false}}" :clone="onClone" v-model="availableFriends">
-              <div class="column is-3" v-for="friend in availableFriends" :key="friend._id" v-if="filterSearch(friend)">
-                <div class="card">
+            <div class="columns is-multiline">
+              <div class="column is-3" 
+                v-for="friend in availableFriends" 
+                :key="friend._id" 
+                v-if="filterSearch(friend)">
+                <div class="card" @click="selected = friend._id">
                   <div class="card-content">
                     <div class="media">
                       <div class="media-left">
@@ -36,20 +43,28 @@
                         </figure>
                       </div>
                       <div class="media-content">
-                        <p class="title is-5" :class="getStateClass(friend.persona_state)">{{ friend.player_name }}</p>
-                        <p class="subtitle is-6" :class="getStateClass(friend.persona_state)">{{ getPersonaState(friend.persona_state) }}</p>
+                        <p class="title is-5" :class="getStateClass(friend.persona_state)">
+                          {{ friend.player_name }}
+                        </p>
+                        <p class="subtitle is-6" :class="getStateClass(friend.persona_state)">
+                          {{ getPersonaState(friend.persona_state) }}
+                        </p>
                       </div>
                       <div class="media-right">
                         <b-checkbox></b-checkbox>
                       </div>
                     </div>
                     <b-taglist>
-                      <b-tag type="is-success" v-for="tag in s().tagsMap[friend._id]" :key="tag">{{ tag }}</b-tag>
+                      <b-tag type="is-success" 
+                        v-for="tag in s().tagsMap[friend._id]" 
+                        :key="tag.key">
+                        {{ tag.name }}
+                      </b-tag>
                     </b-taglist>
                   </div>
                 </div>
               </div>
-            </draggable>
+            </div>
             <b-loading :active.sync="loading"></b-loading>
           </div>
         </div>
@@ -59,46 +74,38 @@
         <div class="tile is-child">
           <h1 class="title">Tags</h1>
           <div class="is-divider"></div>
-          <b-collapse class="card" v-for="(tag, key) in this.$store.state.Steam.tags" :key="key" :open="false">
-            <div slot="trigger" slot-scope="props" class="card-header">
-              <p class="card-header-title">
+          <div v-if="selected != null">
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-64x64">
+                  <img :src="s().friends[this.selected].avatar_url_full">
+                </figure>
+              </div>
+              <div class="media-content">
+                <p class="title is-5" 
+                  :class="getStateClass(s().friends[this.selected].persona_state)">
+                  {{ s().friends[this.selected].player_name }}
+                </p>
+                <p class="subtitle is-6" 
+                  :class="getStateClass(s().friends[this.selected].persona_state)">
+                  {{ getPersonaState(s().friends[this.selected].persona_state) }}
+                </p>
+              </div>
+            </div>
+            <div class="is-divider"></div>
+            <b-field 
+              v-for="(tag, groupid) in this.$store.state.Steam.tags" 
+              :key="groupid">
+              <b-checkbox 
+                :value="isInTag(selected, groupid)"
+                @input="updateFriend(groupid, ...arguments)">
                 {{ tag.name }}
-              </p>
-              <a class="card-header-icon">
-                <b-icon :icon="props.open ? 'caret-down' : 'caret-up'">
-                </b-icon>
-              </a>
-            </div>
-            <div class="card-content">
-              <draggable class="content" :options="{group: {name: 'manage', pull: false, put: true}}">
-                <div class="card" v-for="(member, key) in sortMembers(key)" :key="key">
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-left is-marginless">
-                        <figure class="image is-48x48">
-                          <img :src="s().friends[member.getSteamID64()].avatar_url_full">
-                        </figure>
-                      </div>
-                      <div class="media-content">
-                        <p class="title is-5" :class="getStateClass(s().friends[member.getSteamID64()].persona_state)">{{ s().friends[member.getSteamID64()].player_name }}</p>
-                        <p class="subtitle is-6" :class="getStateClass(s().friends[member.getSteamID64()].persona_state)">{{ getPersonaState(s().friends[member.getSteamID64()].persona_state) }}</p>
-                      </div>
-                      <div class="media-right">
-                        <b-checkbox></b-checkbox>
-                      </div>
-                    </div>
-                    <b-taglist>
-                      <b-tag type="is-success" v-for="(tag, index) in s().tagsMap[member.getSteamID64()]" :key="index">{{ tag }}</b-tag>
-                    </b-taglist>
-                  </div>
-                </div>
-              </draggable>
-            </div>
-            <footer class="card-footer">
-              <a class="card-footer-item">Rename</a>
-              <a class="card-footer-item">Delete</a>
-            </footer>
-          </b-collapse>
+              </b-checkbox>
+            </b-field>
+          </div>
+          <div v-else>
+            <h1 class="title has-text-grey has-text-centered">Select a friend from the left to begin!</h1>
+          </div>
         </div>
       </div>
     </div>
@@ -109,20 +116,18 @@
 import { remote } from "electron";
 import * as fuzzysearch from "fuzzysearch";
 import * as _ from "lodash";
-import draggable from 'vuedraggable';
 
+const client = remote.getGlobal("client");
 const SteamUser = remote.getGlobal("SteamUser");
 
 export default {
   name: "Dashboard",
-  components: {
-    draggable
-  },
   data() {
     return {
       online_only: false,
       search_filter: "",
-      loading: false
+      loading: false,
+      selected: null
     };
   },
   methods: {
@@ -145,21 +150,53 @@ export default {
     },
     filterSearch(m) {
       if (this.search_filter.length > 0) {
-        return fuzzysearch(this.search_filter.toUpperCase(), m.player_name.toUpperCase());
+        return fuzzysearch(
+          this.search_filter.toUpperCase(),
+          m.player_name.toUpperCase()
+        );
       }
       return true;
     },
-    onClone(el) {
-      console.log(el);
-      return el;
+    isInTag(steamid, search) {
+      if (this.s().tagsMap[steamid]) {
+        return this.s().tagsMap[steamid].some(tag => {
+          return tag.key === search;
+        });
+      }
+
+      return false;
+    },
+    updateFriend(groupid, add) {
+
+      this.loading = true;
+
+      if (add) {
+        client.addFriendToGroup(parseInt(groupid, 10), this.selected, () => {
+          this.updateTags();
+          this.loading = false;
+        })
+      } else {
+        client.removeFriendFromGroup(parseInt(groupid, 10), this.selected, () => {
+          this.updateTags();
+          this.loading = false;
+        })
+      }
+    },
+    updateTags() {
+      this.$store.dispatch("updateTags", client.myFriendGroups);
     }
   },
   computed: {
     availableFriends() {
       const filtered = {};
-      Object.keys(this.s().friends).forEach((friend) => {
-        if (!this.online_only || this.s().friends[friend].persona_state !== null)
-          filtered[friend] = Object.assign(this.s().friends[friend], { _id: friend });
+      Object.keys(this.s().friends).forEach(friend => {
+        if (
+          !this.online_only ||
+          this.s().friends[friend].persona_state !== null
+        )
+          filtered[friend] = Object.assign(this.s().friends[friend], {
+            _id: friend
+          });
       });
       return _.sortBy(filtered, "persona_state");
     }
