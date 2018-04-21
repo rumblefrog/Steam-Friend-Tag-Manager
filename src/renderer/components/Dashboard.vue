@@ -181,7 +181,7 @@ export default {
       if (this.new_user === null) this.new_user = false;
       else this.new_user = true;
     },
-    addToQueue(user, groupid, add) {
+    async addToQueue(user, groupid, add) {
       if (this.new_user) {
         this.new_user = false;
         return;
@@ -220,7 +220,7 @@ export default {
         this.processQueue();
       }, 1000);
     },
-    processQueue() {
+    async processQueue() {
       this.loading = true;
 
       const promises = [];
