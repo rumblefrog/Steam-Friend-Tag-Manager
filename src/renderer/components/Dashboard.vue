@@ -104,7 +104,7 @@
               :key="groupid">
               <b-checkbox 
                 :value="isInTag(selected, groupid)"
-                @input="updateFriend(groupid, ...arguments)">
+                @input="addToQueue(selected, groupid, ...arguments)">
                 {{ tag.name }}
               </b-checkbox>
             </b-field>
@@ -134,7 +134,9 @@ export default {
       search_filter: "",
       loading: false,
       selected: null,
-      new_user: null
+      new_user: null,
+      queue: [],
+      timeout: null
     };
   },
   methods: {
@@ -179,29 +181,82 @@ export default {
       if (this.new_user === null) this.new_user = false;
       else this.new_user = true;
     },
-    updateFriend(groupid, add) {
+    addToQueue(user, groupid, add) {
       if (this.new_user) {
         this.new_user = false;
         return;
       }
 
+      const pass = this.queue.every((item, index) => {
+        if (item.user === user && item.groupid === groupid && item.add === add)
+          return false;
+
+        if (
+          item.user === user &&
+          item.groupid === groupid &&
+          item.add !== add
+        ) {
+          this.queue.splice(index, 1);
+          return false;
+        }
+
+        return true;
+      });
+
+      if (pass) {
+        this.queue.push({
+          "user": user,
+          "groupid": groupid,
+          "add": add
+        });
+      }
+
+      clearTimeout(this.timeout);
+
+      this.timeout = setTimeout(() => {
+        this.processQueue();
+      }, 2000);
+    },
+    processQueue() {
       this.loading = true;
 
-      if (add) {
-        client.addFriendToGroup(parseInt(groupid, 10), this.selected, () => {
-          this.updateTags();
-          this.loading = false;
-        });
-      } else {
-        client.removeFriendFromGroup(
-          parseInt(groupid, 10),
-          this.selected,
-          () => {
-            this.updateTags();
-            this.loading = false;
-          }
-        );
-      }
+      const promises = [];
+
+      this.queue.forEach((item) => {
+        if (item.add) {
+          promises.push(
+            new Promise((resolve, reject) => {
+              client.addFriendToGroup(
+                parseInt(item.groupid, 10),
+                item.user,
+                err => {
+                  if (err) reject(err);
+                  else resolve();
+                }
+              );
+            })
+          );
+        } else {
+          promises.push(
+            new Promise((resolve, reject) => {
+              client.removeFriendFromGroup(
+                parseInt(item.groupid, 10),
+                item.user,
+                err => {
+                  if (err) reject(err);
+                  else resolve();
+                }
+              );
+            })
+          );
+        }
+      });
+
+      Promise.all(promises).then(() => {
+        this.queue = [];
+        this.updateTags();
+        this.loading = false;
+      });
     },
     updateTags() {
       this.$store.dispatch("updateTags", client.myFriendGroups);
