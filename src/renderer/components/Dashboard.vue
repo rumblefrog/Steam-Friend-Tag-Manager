@@ -187,6 +187,9 @@ export default {
         return;
       }
 
+      if ((add && this.isInTag(user, groupid)) || (!add && !this.isInTag(user, groupid)))
+        return; 
+
       const pass = this.queue.every((item, index) => {
         if (item.user === user && item.groupid === groupid && item.add === add)
           return false;
