@@ -4,7 +4,14 @@
       <div class="tile is-8 is-vertical do-not-scroll">
         <div class="tile is-parent">
           <div class="tile is-child">
-            <h1 class="title">Friends</h1>
+            <div class="level">
+              <div class="level-left">
+                <h1 class="title level-item">Friends</h1>
+              </div>
+              <div class="level-right">
+                <b-icon icon="sync" class="level-item fa-spin" v-if="loading"></b-icon>
+              </div>
+            </div>
             <div class="is-divider"></div>
           </div>
         </div>
@@ -65,7 +72,6 @@
                 </div>
               </div>
             </div>
-            <b-loading :active.sync="loading"></b-loading>
           </div>
         </div>
       </div>
