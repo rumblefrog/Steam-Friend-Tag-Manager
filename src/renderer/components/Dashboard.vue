@@ -176,6 +176,9 @@ export default {
       return false;
     },
     selectUser(user) {
+      if (this.queue.length > 0)
+        return;
+
       this.selected = user;
 
       if (this.new_user === null) this.new_user = false;
@@ -218,7 +221,7 @@ export default {
 
       this.timeout = setTimeout(() => {
         this.processQueue();
-      }, 1000);
+      }, 500);
     },
     async processQueue() {
       this.loading = true;
