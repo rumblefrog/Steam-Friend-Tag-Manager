@@ -78,7 +78,10 @@
       <div class="is-divider-vertical"></div>
       <div class="tile is-3 is-parent is-vertical">
         <div class="tile is-child">
-          <h1 class="title">Tags</h1>
+          <h1 class="title">
+            <span>Tags</span>
+            <a><b-icon icon="pencil-alt"></b-icon></a>
+          </h1>
           <div class="is-divider"></div>
           <div v-if="selected != null">
             <div class="media">
