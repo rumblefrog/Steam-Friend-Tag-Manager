@@ -34,7 +34,7 @@
                 v-for="friend in availableFriends" 
                 :key="friend._id" 
                 v-if="filterSearch(friend)">
-                <div class="card" @click="selected = friend._id">
+                <div class="card" @click="selectUser(friend._id)">
                   <div class="card-content">
                     <div class="media">
                       <div class="media-left">
@@ -127,7 +127,8 @@ export default {
       online_only: false,
       search_filter: "",
       loading: false,
-      selected: null
+      selected: null,
+      new_user: null
     };
   },
   methods: {
@@ -166,7 +167,17 @@ export default {
 
       return false;
     },
+    selectUser(user) {
+      this.selected = user;
+
+      if (this.new_user === null) this.new_user = false;
+      else this.new_user = true;
+    },
     updateFriend(groupid, add) {
+      if (this.new_user) {
+        this.new_user = false;
+        return;
+      }
 
       this.loading = true;
 
@@ -174,12 +185,16 @@ export default {
         client.addFriendToGroup(parseInt(groupid, 10), this.selected, () => {
           this.updateTags();
           this.loading = false;
-        })
+        });
       } else {
-        client.removeFriendFromGroup(parseInt(groupid, 10), this.selected, () => {
-          this.updateTags();
-          this.loading = false;
-        })
+        client.removeFriendFromGroup(
+          parseInt(groupid, 10),
+          this.selected,
+          () => {
+            this.updateTags();
+            this.loading = false;
+          }
+        );
       }
     },
     updateTags() {

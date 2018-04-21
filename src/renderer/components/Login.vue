@@ -77,16 +77,19 @@ export default {
       client.setPersona(SteamUser.EPersonaState.Online);
     });
     client.once("user", () => {
-      const p = [];
+      setTimeout(() => {
+        const p = [];
 
-      Object.keys(client.myFriends).forEach(key => {
-        if (client.myFriends[key] === SteamUser.EFriendRelationship.Friend) p.push(key);
-      });
+        Object.keys(client.myFriends).forEach(key => {
+          if (client.myFriends[key] === SteamUser.EFriendRelationship.Friend)
+            p.push(key);
+        });
 
-      client.getPersonas(p, personas => {
-        this.$store.dispatch("updateFriends", personas);
-        this.$router.push("dashboard");
-      });
+        client.getPersonas(p, personas => {
+          this.$store.dispatch("updateFriends", personas);
+          this.$router.push("dashboard");
+        });
+      }, 1000);
     });
     client.on("friendsGroupList", tags => {
       this.$store.dispatch("updateTags", tags);
