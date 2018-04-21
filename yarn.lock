@@ -8097,9 +8097,9 @@ steam-totp@^1.4.1:
   dependencies:
     "@doctormckay/stats-reporter" "^1.0.0"
 
-steam-user@^3.27.0:
+steam-user@DoctorMcKay/node-steam-user:
   version "3.27.0"
-  resolved "https://registry.yarnpkg.com/steam-user/-/steam-user-3.27.0.tgz#f7502bed0d7c5a70bc76400395eb230d62457815"
+  resolved "https://codeload.github.com/DoctorMcKay/node-steam-user/tar.gz/ca4be8aa095fa04edcad86e50b7b068bdee46659"
   dependencies:
     "@doctormckay/proxy-agent" "^1.0.0"
     "@doctormckay/stats-reporter" "^1.0.3"
@@ -9038,8 +9038,8 @@ websocket-extensions@>=0.1.1, websocket-extensions@^0.1.1:
   resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.3.tgz#5d2ff22977003ec687a4b87073dfbbac146ccf29"
 
 websocket13@^1.6.1:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/websocket13/-/websocket13-1.7.0.tgz#59dc702daf9c2fab663ef380347bb5714e72bd26"
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/websocket13/-/websocket13-1.7.1.tgz#4b10e1df45e0d665a0a907511a3dd4044e228dfc"
   dependencies:
     "@doctormckay/proxy-agent" "^1.0.0"
     bytebuffer "^5.0.1"
