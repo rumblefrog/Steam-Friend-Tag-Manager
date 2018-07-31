@@ -2,6 +2,8 @@
 
 > Manage your friend tags easily and effortlessly!
 
+WARN: OBSOLETE | USE NEW STEAM UI INSTEAD
+
 [![Build Status](https://travis-ci.org/RumbleFrog/Steam-Friend-Tag-Manager.svg?branch=master)](https://travis-ci.org/RumbleFrog/Steam-Friend-Tag-Manager)
 [![Build status](https://ci.appveyor.com/api/projects/status/qmhqox4l5njseagw?svg=true)](https://ci.appveyor.com/project/RumbleFrog/steam-friend-tag-manager)
 
